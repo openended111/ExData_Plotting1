@@ -1,7 +1,7 @@
 library("dplyr")
 Sys.setlocale("LC_TIME", "English")
 
-power <- read.table("household_power_consumption.txt",header=TRUE,sep=";")
+power <- read.table("household_power_consumption.txt",header=TRUE,sep=";",na.strings="?")
 t1 <- as.Date("2007-2-1")
 t2 <- as.Date("2007-2-2")
 powersub <- subset(power,as.Date(power$Date,format="%d/%m/%Y") %in% t1:t2)
@@ -19,6 +19,6 @@ levels(powersub$Day) <- c("Thu","Fri")
 
 powersub$Global_active_power <- as.numeric(powersub$Global_active_power)
 
-with(powersub,plot(powersub$DateTime,powersub$Global_active_power/1000,type="l",xlab="",ylab="Global Active Power (killowatts)"))
+with(powersub,plot(powersub$DateTime,powersub$Global_active_power,type="l",xlab="",ylab="Global Active Power (killowatts)"))
 dev.copy(png,file="plot2.png",width = 480,height = 480)
 dev.off()
